@@ -1,0 +1,58 @@
+NAME
+    Class::Component::Recipe - Dynamic Component Containers
+
+SYNOPSIS
+      use Class::Component::Recipe;
+
+      # Create a new C:C:R object. Most work is done in the collection
+      my $ccr = Class::Component::Recipe->new(base_class => 'Foo::Base');
+      my $col = $ccr->get_collection;
+
+      # Prepare the class list as you need it. See the Collection pod.
+      $col->push('Foo::ComponentA');
+      $col->push('Foo::ComponentB');
+      $col->insert('Foo::Middle', 1);
+
+      # Install. @MyApp::Foo::ISA is now: Foo::ComponentB, Foo::Middle,
+      # Foo::ComponentA, Foo::Base. Previously existing entries will be
+      # before Foo::Base.
+      $ccr->install('MyApp::Foo');
+
+DESCRIPTION
+    This module provides functionality to build a collection of classes and
+    install it together with a base in a container class. This allows the
+    dynamic creation of component based classes.
+
+ATTRIBUTES
+  (get_|set_|has_)base_class
+    The base class of the component container to build.
+
+  (get_|set_|has_)collection
+    The collection object handling component order and installing the final
+    container.
+
+  (get_|set_)collection_class
+    The class name of the collection object this recipe will produce.
+
+METHODS
+  BUILD($param)
+    Moose method. Initializes "collection" if not passed to constructor.
+
+  install($target_class)
+    Installs the collection into the $target_class.
+
+SEE ALSO
+    Class::Component::Recipe::Collection for the collection interface. NEXT,
+    C3 for component designing systems with multiple inheritance.
+
+REQUIRES
+    aliased, Class::Inspector, Carp::Clan, Moose, Moose::Policy, Test::More
+    (for build).
+
+AUTHOR
+    Robert 'phaylon' Sedlacek "<phaylon@dunkelheit.at>"
+
+LICENSE AND COPYRIGHT
+    This program is free software, you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+

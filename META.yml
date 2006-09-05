@@ -1,0 +1,19 @@
+abstract: Dynamic Component Containers
+author: Robert 'phaylon' Sedlacek <phaylon@dunkelheit.at>
+build_requires:
+  Test::More: 0
+distribution_type: module
+generated_by: Module::Install version 0.64
+license: perl
+name: Class-Component-Recipe
+no_index:
+  directory:
+    - inc
+    - t
+requires:
+  Carp::Clan: 0
+  Class::Inspector: 0
+  Moose: 0
+  Moose::Policy: 0
+  aliased: 0
+version: 0.01_01

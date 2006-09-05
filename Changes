@@ -1,0 +1,6 @@
+
+[0.01_01] Tue Sep  5 16:07:46 CEST 2006
+    - Initial Release. Basic functionality for external integration
+      and tests should be complete. This is a development release
+      to be able to further change the API if external usage requires
+      it. Once it has proven, it will be released as a public version.
