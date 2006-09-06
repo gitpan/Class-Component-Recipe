@@ -1,3 +1,10 @@
+[0.01_02] Wed Sep  6 15:24:10 CEST 2006
+    - reinstall got refactored into install, which is now sensible per
+      Collection instance of the classes it installed to, and caches
+      their original contents on install.
+    - The reinstall methods in Collection and Recipe are implemented.
+    - Original @ISA contents were not preserved correctly. Fixed and
+      andded a test.
 
 [0.01_01] Tue Sep  5 16:07:46 CEST 2006
     - Initial Release. Basic functionality for external integration

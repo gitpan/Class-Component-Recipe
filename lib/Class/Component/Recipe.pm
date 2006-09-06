@@ -13,7 +13,7 @@ use Moose;
 
 use aliased 'Class::Component::Recipe::Collection';
 
-our $VERSION = '0.01_01';
+our $VERSION = '0.01_02';
 
 =head1 SYNOPSIS
 
@@ -91,7 +91,7 @@ sub BUILD {
 
 =head2 install($target_class)
 
-Installs the collection into the C<$target_class>.
+Installs the collection and the base class into the C<$target_class>.
 
 =cut
 

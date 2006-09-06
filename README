@@ -39,7 +39,7 @@ METHODS
     Moose method. Initializes "collection" if not passed to constructor.
 
   install($target_class)
-    Installs the collection into the $target_class.
+    Installs the collection and the base class into the $target_class.
 
 SEE ALSO
     Class::Component::Recipe::Collection for the collection interface. NEXT,

@@ -1,6 +1,6 @@
 =head1 NAME
 
-Class::Component::Recipe::Collection 
+Class::Component::Recipe::Collection - Component Collection
 
 =cut
 
@@ -16,7 +16,7 @@ use Moose;
 
 =head1 ATTRIBUTES
 
-=head2 classes
+=head2 (get_|set_)classes
 
 The actual list of classes. Provides C<get_classes> and C<set_classes>.
 Has to be an ArrayRef and is empty by default.
@@ -27,17 +27,29 @@ has 'classes',
     is => 'rw', isa => 'ArrayRef', default => sub {[]},
     ;
 
+=head2 get_original_isa
+
+Contains the original content of the target classes C<@ISA> arrays after
+it has been changed by L<install>.
+
+=cut
+
+has 'original_isa',
+    is => 'ro', isa => 'HashRef', default => sub {{}},
+    ;
+
 =head1 METHODS
 
 =head2 install($target_class, $base_class)
 
 Installs the list of L<classes> and the C<$base_class> in the
-C<$target_class>.
+C<$target_class>. The C<$_between> value is internal, so reinstall
+can pass the former C<@ISA> contents.
 
 =cut
 
 sub install {
-    my ($self, $target_class, $base_class) = @_;
+    my ($self, $target_class, $base_class, $_between) = @_;
     
     unless (Class::Inspector->loaded($target_class)) {
         eval qq(
@@ -48,15 +60,25 @@ sub install {
         no strict 'refs';
         \@{$target_class . '::ISA'}
     };
-
+    
+    my $originals = $self->get_original_isa;
     my @classes;
+    if (exists $originals->{$target_class}) {
+        @classes = @{$originals->{$target_class}};
+    }
+    else {
+        @classes = @{$originals->{$target_class} = [reverse @$target_ISA]};
+    }
+    
+    #$self->get_original_isa->{$target_class} = [reverse @$target_ISA];
+    #my @classes = ($_between ? @$_between : reverse(@$target_ISA));
 
     $self->_ensure_loaded_class($base_class);
-    push @classes, $base_class if defined $base_class;
+    unshift @classes, $base_class if defined $base_class;
 
     push @classes, @{$self->get_classes};
     $self->_ensure_loaded_class($_) for @classes;
-    push @$target_ISA, reverse(@classes);
+    @$target_ISA = reverse(@classes);
 
     1;
 }

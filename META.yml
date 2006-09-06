@@ -16,4 +16,4 @@ requires:
   Moose: 0
   Moose::Policy: 0
   aliased: 0
-version: 0.01_01
+version: 0.01_02
